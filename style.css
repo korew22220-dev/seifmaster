@@ -66,3 +66,16 @@ body{font-size:18px;line-height:1.65;background:var(--paper)}.topline{font-size:
 main,body>footer{transition:opacity 160ms ease}
 body.section-navigating main,body.section-navigating>footer{opacity:0}
 @media(prefers-reduced-motion:reduce){main,body>footer{transition:none}}
+
+/* Local address card: no third-party map, scripts or advertising. */
+.location-card{background:#edf2f8;min-height:420px}
+.location-card-body{position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px 24px 26px;text-align:center;isolation:isolate;background:radial-gradient(ellipse at 50% 44%,#fff 0%,#f3f6fb 48%,#e8eef6 100%)}
+.location-card-city{font-size:13px;font-weight:650;color:#54667c;letter-spacing:.02em}
+.location-pin{position:relative;margin:22px 0 10px;line-height:0}
+.location-pin:after{content:"";position:absolute;bottom:-4px;left:12px;width:56px;height:10px;border-radius:50%;background:#2454a417;z-index:-1}
+.location-card-brand{font-size:28px;font-weight:750;color:#202b38;letter-spacing:-.7px}
+.location-card-address{margin-top:15px;display:grid;gap:2px;color:#45566b;font-size:17px;line-height:1.6}
+.location-card-address strong{font-size:24px;font-weight:650;color:#2454a4}
+.location-card-body p{margin:17px 0 0;font-size:13px;color:#637185;line-height:1.7}
+.location-card .map-external{border-top:1px solid #dce3eb;padding:16px 18px}
+@media(max-width:600px){.location-card{min-height:370px}.location-card-body{padding:25px 20px}.location-pin{margin-top:18px}.location-pin svg{width:65px;height:81px}.location-card-brand{font-size:26px}.location-card-address{font-size:16px}.location-card-address strong{font-size:23px}}
