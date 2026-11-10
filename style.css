@@ -70,3 +70,14 @@ body.section-navigating main,body.section-navigating>footer{opacity:0}
 
 /* Responsive official 2GIS constructor map. */
 .location-map iframe{min-height:420px;height:420px;width:100%;border:0}@media(max-width:600px){.location-map iframe{min-height:360px;height:360px}}
+
+
+/* MAX is the first messenger and the preferred contact option. */
+.channel-max{background:#6150ce;border-color:#6150ce;color:#fff}
+.channel-max:hover{background:#4d3db0;border-color:#4d3db0;color:#fff}
+.floating-contact #contact-menu .channel-max{background:#6150ce}
+.floating-contact #contact-menu .channel-max:hover{background:#4d3db0}
+.contact-channels .channel-max{flex-basis:100%}
+#email-ready .channel-max{text-decoration:none}
+#max-send-note{margin:0 0 14px}
+@media(max-width:600px){.contact-channels .channel-call{flex-basis:135px}.contact-channels .channel-max{flex-basis:100%}}
