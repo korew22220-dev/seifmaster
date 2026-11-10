@@ -81,3 +81,9 @@ body.section-navigating main,body.section-navigating>footer{opacity:0}
 #email-ready .channel-max{text-decoration:none}
 #max-send-note{margin:0 0 14px}
 @media(max-width:600px){.contact-channels .channel-call{flex-basis:135px}.contact-channels .channel-max{flex-basis:100%}}
+
+/* Product photos belong to each safe type rather than a separate gallery. */
+.safe-type-photo{display:block;width:100%;height:230px;padding:0;margin:0 0 22px;border:0;border-radius:14px;background:#fff;overflow:hidden;cursor:zoom-in;flex-shrink:0}
+.safe-type-photo img{display:block;width:100%;height:100%;object-fit:contain}
+.safe-type-photo:focus-visible{outline:3px solid #6d9ad9;outline-offset:4px}
+@media(max-width:600px){.safe-type-photo{height:auto;aspect-ratio:4/3;max-height:250px;margin-bottom:20px}}
