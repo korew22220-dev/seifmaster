@@ -99,3 +99,11 @@ body.section-navigating main,body.section-navigating>footer{opacity:0}
 .nav-catalog-toggle{display:none}@media(min-width:1001px){.header nav{position:relative;align-items:center}.header nav .nav-mobile-catalog{display:none}.nav-catalog-toggle{display:inline-flex;align-items:center;gap:5px;border:0;background:transparent;color:inherit;font:inherit;cursor:pointer;padding:8px 0}.nav-catalog-toggle:hover{color:var(--orange)}.header nav .nav-product-links.desktop-open{display:grid;position:absolute;top:100%;left:-18px;z-index:30;gap:0;width:245px;padding:8px;background:#fff;border:1px solid #dbe3ed;border-radius:14px;box-shadow:0 12px 30px #1c293026}.nav-product-links.desktop-open a{padding:10px 12px;border-radius:8px;line-height:1.35}.nav-product-links.desktop-open a:hover,.nav-product-links.desktop-open a:focus-visible{background:#f1f5fb}.nav-catalog-toggle:focus-visible{outline:2px solid #2454a4;outline-offset:3px}}
 
 .selection-photo{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;margin-top:30px;border-radius:16px}@media(max-width:600px){.selection-photo{margin-top:24px;border-radius:12px}}
+
+/* Equipment image integrated into the selection introduction. */
+.selection-intro{isolation:isolate;min-height:540px}
+.selection-intro .selection-photo{position:absolute;inset:0;width:100%;height:100%;aspect-ratio:auto;object-fit:cover;object-position:center;margin:0;border-radius:0;z-index:-2}
+.selection-intro::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(24,40,60,.96) 0%,rgba(24,40,60,.92) 40%,rgba(24,40,60,.48) 72%,rgba(24,40,60,.18) 100%)}
+.selection-intro>p,.selection-intro .selection-note{color:#f1f5fa}
+@media(max-width:1000px){.selection-intro{min-height:520px;padding-bottom:200px}.selection-intro .selection-photo{object-position:center bottom}.selection-intro::before{background:linear-gradient(180deg,rgba(24,40,60,.97) 0%,rgba(24,40,60,.92) 40%,rgba(24,40,60,.55) 65%,rgba(24,40,60,.12) 100%)}}
+@media(max-width:600px){.selection-intro{min-height:500px;padding-bottom:190px}}
