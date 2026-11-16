@@ -42,17 +42,44 @@ brandMotionToggle.addEventListener('click',()=>{
 
 const photoDialog=$('#photo-dialog');
 let photoGroup='',photoIndex=0;
+let photoScrollY=0,photoTransitionTimer;
+function lockPhotoPage(){
+ photoScrollY=window.scrollY;
+ document.body.style.position='fixed';
+ document.body.style.top=-photoScrollY+'px';
+ document.body.style.left='0';
+ document.body.style.right='0';
+ document.body.style.width='100%';
+}
+photoDialog.addEventListener('close',()=>{
+ clearTimeout(photoTransitionTimer);
+ const image=$('#large-product-photo');image.classList.remove('photo-changing');
+ document.body.style.position='';document.body.style.top='';
+ document.body.style.left='';document.body.style.right='';document.body.style.width='';
+ window.scrollTo({top:photoScrollY,behavior:'instant'});
+});
+function changeProductPhoto(direction){
+ const photos=productPhotos[photoGroup];if(!photos||photos.length<2)return;
+ const image=$('#large-product-photo');
+ if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){showProductPhoto(photoGroup,photoIndex+direction);return;}
+ clearTimeout(photoTransitionTimer);
+ image.classList.add('photo-changing');
+ photoTransitionTimer=setTimeout(()=>{
+  showProductPhoto(photoGroup,photoIndex+direction);
+  image.classList.remove('photo-changing');
+ },120);
+}
 function showProductPhoto(group,index){
  const photos=productPhotos[group];if(!photos?.length)return;
  photoGroup=group;photoIndex=(index+photos.length)%photos.length;
  const photo=photos[photoIndex];$('#large-product-photo').src='assets/'+photo.src;$('#large-product-photo').alt=photo.alt;
  $('#product-photo-caption').textContent=photo.alt;$('#product-photo-count').textContent=`${photoIndex+1} / ${photos.length}`;
  $('#previous-product-photo').disabled=photos.length<2;$('#next-product-photo').disabled=photos.length<2;
- if(!photoDialog.open)photoDialog.showModal();
+ if(!photoDialog.open){lockPhotoPage();photoDialog.showModal();}
 }
 document.addEventListener('click',event=>{const trigger=event.target.closest('[data-photo-group]');if(trigger)showProductPhoto(trigger.dataset.photoGroup,Number(trigger.dataset.photoIndex));});
-$('#previous-product-photo').addEventListener('click',()=>showProductPhoto(photoGroup,photoIndex-1));
-$('#next-product-photo').addEventListener('click',()=>showProductPhoto(photoGroup,photoIndex+1));
+$('#previous-product-photo').addEventListener('click',()=>changeProductPhoto(-1));
+$('#next-product-photo').addEventListener('click',()=>changeProductPhoto(1));
 let photoTouchStart=null;
 photoDialog.querySelector('figure').addEventListener('touchstart',event=>{
  if(event.touches.length!==1){photoTouchStart=null;return;}
@@ -62,10 +89,10 @@ photoDialog.querySelector('figure').addEventListener('touchend',event=>{
  if(!photoTouchStart||event.changedTouches.length!==1){photoTouchStart=null;return;}
  const touch=event.changedTouches[0],dx=touch.clientX-photoTouchStart.x,dy=touch.clientY-photoTouchStart.y;
  photoTouchStart=null;
- if(Math.abs(dx)>=50&&Math.abs(dx)>Math.abs(dy)*1.3)showProductPhoto(photoGroup,photoIndex+(dx<0?1:-1));
+ if(Math.abs(dx)>=50&&Math.abs(dx)>Math.abs(dy)*1.3)changeProductPhoto(dx<0?1:-1);
 },{passive:true});
 photoDialog.querySelector('figure').addEventListener('touchcancel',()=>{photoTouchStart=null;},{passive:true});
-photoDialog.addEventListener('keydown',event=>{if(event.key==='ArrowLeft'){event.preventDefault();showProductPhoto(photoGroup,photoIndex-1);}if(event.key==='ArrowRight'){event.preventDefault();showProductPhoto(photoGroup,photoIndex+1);}});
+photoDialog.addEventListener('keydown',event=>{if(event.key==='ArrowLeft'){event.preventDefault();changeProductPhoto(-1);}if(event.key==='ArrowRight'){event.preventDefault();changeProductPhoto(1);}});
 
 $('.copy-address').addEventListener('click',async()=>{
  const address='Набережные Челны, улица Машиностроительная, 43, строение 3';
