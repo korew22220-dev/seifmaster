@@ -159,3 +159,8 @@ body.section-navigating main,body.section-navigating>footer{opacity:0}
 }
 @media (min-width:1001px) and (max-width:1200px){.header nav>.nav-catalog-toggle,.header nav>a:not(.nav-mobile-catalog){padding-left:8px;padding-right:8px}}
 @media (prefers-reduced-motion:reduce){.header nav>.nav-catalog-toggle,.header nav>a:not(.nav-mobile-catalog){transition:none}}
+
+/* Complete the timeline across the final desktop column. */
+@media (min-width:1001px){
+ .process-grid article:last-child::before{content:"";position:absolute;top:22px;left:44px;width:calc(100% - 44px);height:2px;background:#b8cae3}
+}
