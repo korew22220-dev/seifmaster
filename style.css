@@ -149,8 +149,3 @@ body.section-navigating main,body.section-navigating>footer{opacity:0}
  .service-terms article::before{font-size:38px}
 }
 
-/* Desktop navigation: primary ordering action */
-@media (min-width:1001px){
- .header nav>a[href="#selection"]{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 18px;border-radius:12px;background:#2454a4;color:#fff;font-weight:700;white-space:nowrap;transition:background-color .2s ease}
- .header nav>a[href="#selection"]:hover,.header nav>a[href="#selection"]:focus-visible{background:#193f81;color:#fff}
-}
