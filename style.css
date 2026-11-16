@@ -124,12 +124,3 @@ body.section-navigating main,body.section-navigating>footer{opacity:0}
 .trust p{grid-column:2;margin:7px 0 0;font-size:14px;line-height:1.55;max-width:none}
 @media(max-width:1000px){.trust{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.trust>div{padding:22px 18px}}
 @media(max-width:480px){.trust{grid-template-columns:1fr;gap:10px}.trust>div{padding:18px;grid-template-columns:36px minmax(0,1fr);column-gap:14px}.trust .trust-icon{width:32px;height:32px}.trust b{font-size:16px}.trust p{font-size:14px}}
-
-/* Section introductions */
-.product-guide .guide-header{display:grid;grid-template-columns:minmax(220px,.8fr) minmax(0,1.4fr);align-items:center;gap:32px;background:#fff;border:1px solid #dce3eb;border-radius:20px;padding:28px 32px;margin:0 0 28px}
-.guide-heading{border-left:4px solid #2454a4;padding-left:22px}
-.product-guide .guide-header h3{margin:0 0 10px;font-size:clamp(25px,2.4vw,34px);overflow-wrap:anywhere}
-.product-guide .guide-header small{display:inline-block;margin:0;padding:4px 13px;border-radius:999px;color:#2454a4;background:#e5eefb;font-size:13px;font-weight:650}
-.product-guide .guide-header .guide-intro{border-left:1px solid #dce3eb;padding-left:32px;margin:0;max-width:none;color:#44576b;line-height:1.65}
-.product-guide .guide-body{padding-left:0}
-@media(max-width:700px){.product-guide .guide-header{grid-template-columns:1fr;gap:16px;padding:22px 20px;border-radius:16px}.guide-heading{padding-left:16px}.product-guide .guide-header h3{font-size:25px;line-height:1.25}.product-guide .guide-header .guide-intro{border-left:0;padding-left:0;font-size:15px;line-height:1.6}}
