@@ -101,7 +101,7 @@ photoDialog.querySelector('figure').addEventListener('touchend',event=>{
 photoDialog.querySelector('figure').addEventListener('touchcancel',()=>{photoTouchStart=null;},{passive:true});
 photoDialog.addEventListener('keydown',event=>{if(event.key==='ArrowLeft'){event.preventDefault();changeProductPhoto(-1);}if(event.key==='ArrowRight'){event.preventDefault();changeProductPhoto(1);}});
 
-$('.copy-address').addEventListener('click',async()=>{
+$('.copy-address')?.addEventListener('click',async()=>{
  const address='Набережные Челны, улица Машиностроительная, 43, строение 3';
  try{await navigator.clipboard.writeText(address);$('#location-status').textContent='Адрес скопирован';}
  catch{$('#location-status').textContent=address;}
