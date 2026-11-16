@@ -112,3 +112,6 @@ body.section-navigating main,body.section-navigating>footer{opacity:0}
 
 /* Contrast focused under copy; imagery remains visible on the right. */
 .solutions-background::after{background:linear-gradient(90deg,rgba(21,34,49,.90) 0%,rgba(21,34,49,.73) 30%,rgba(21,34,49,.32) 62%,rgba(21,34,49,.24) 100%),linear-gradient(180deg,rgba(21,34,49,.18),rgba(21,34,49,.30))}.solutions .solution-item{background:rgba(37,54,74,.88)}.solutions .section-head>p,.solutions .solution-panel p{color:#f0f4f9}@media(max-width:600px){.solutions-background::after{background:linear-gradient(180deg,rgba(21,34,49,.78),rgba(21,34,49,.65) 55%,rgba(21,34,49,.55))}}
+
+/* Match the white background of product photos across their containers. */
+.category.has-product-photo .cat-image,.product-photo-frame,.safe-type-photo{background-color:#fff}
