@@ -217,3 +217,22 @@ body.section-navigating main,body.section-navigating>footer{opacity:0}
 @media(max-width:1000px){.contact-grid{gap:28px}.contact-info{border-left:0;padding:24px 0 0;border-top:1px solid #465669}}
 @media(max-width:600px){.contact-section{padding:48px 0}.contact-channels{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.contact-channels .contact-channel{font-size:12px;gap:5px;padding:10px 5px}.contact-channels .contact-channel svg{width:17px;height:17px}}
 
+
+/* Mobile hero: existing workshop photograph behind the copy. */
+.hero-mobile-description{display:none}
+@media(max-width:600px){
+ .hero.wrap{position:relative;isolation:isolate;overflow:hidden;width:100%;display:block;min-height:620px;padding:0;margin-top:0;background:#171b20}
+ .hero .hero-visual{position:absolute;inset:0;z-index:-2;border-radius:0;min-height:0;height:100%;margin:0}
+ .hero .hero-visual>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:64% center}
+ .hero::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(7,12,18,.88) 0%,rgba(7,12,18,.65) 35%,rgba(7,12,18,.08) 65%,rgba(7,12,18,.78) 100%);pointer-events:none}
+ .hero .image-note,.hero .visual-card,.hero .hero-bottom{display:none}
+ .hero .hero-copy{display:flex;flex-direction:column;min-height:620px;padding:32px 22px 28px}
+ .hero .hero-copy h1{font-size:clamp(30px,8.3vw,44px);line-height:1.12;letter-spacing:-1.2px;color:#fff;margin:0 0 20px}
+ .hero .hero-copy h1 em{color:#fff}
+ .hero .hero-copy>p{color:#f0f3f7;font-size:17px;line-height:1.55;margin:0;max-width:330px}
+ .hero-desktop-description{display:none}
+ .hero-mobile-description{display:inline}
+ .hero .hero-actions{margin-top:auto;padding-top:180px;gap:7px}
+ .hero .hero-actions .button{width:100%;justify-content:center;font-size:15px;padding:14px 16px}
+ .hero .hero-browse{color:#fff;font-size:15px;padding:10px 0}
+}
