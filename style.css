@@ -115,3 +115,12 @@ body.section-navigating main,body.section-navigating>footer{opacity:0}
 
 /* Match the white background of product photos across their containers. */
 .category.has-product-photo .cat-image,.product-photo-frame,.safe-type-photo{background-color:#fff}
+
+/* Benefit cards */
+.trust{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;border:0}
+.trust>div{display:grid;grid-template-columns:42px minmax(0,1fr);grid-template-rows:auto 1fr;column-gap:16px;align-content:start;padding:24px 20px;background:#fff;border:1px solid #dce3eb;border-radius:18px}
+.trust .trust-icon{grid-column:1;grid-row:1 / span 2;width:38px;height:38px;color:#20529c;align-self:start}
+.trust b{grid-column:2;line-height:1.35;font-size:16px}
+.trust p{grid-column:2;margin:7px 0 0;font-size:14px;line-height:1.55;max-width:none}
+@media(max-width:1000px){.trust{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.trust>div{padding:22px 18px}}
+@media(max-width:480px){.trust{grid-template-columns:1fr;gap:10px}.trust>div{padding:18px;grid-template-columns:36px minmax(0,1fr);column-gap:14px}.trust .trust-icon{width:32px;height:32px}.trust b{font-size:16px}.trust p{font-size:14px}}
