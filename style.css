@@ -149,3 +149,13 @@ body.section-navigating main,body.section-navigating>footer{opacity:0}
  .service-terms article::before{font-size:38px}
 }
 
+
+/* Desktop navigation: equal links with subtle separators. */
+@media (min-width:1001px){
+ .header nav{gap:0}
+ .header nav>.nav-catalog-toggle,.header nav>a:not(.nav-mobile-catalog){position:relative;display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:8px 12px;border-radius:10px;color:#1c2937;white-space:nowrap;transition:transform .18s ease,box-shadow .18s ease,background-color .18s ease,color .18s ease}
+ .header nav>a:not(.nav-mobile-catalog)::before{content:"";position:absolute;left:0;top:25%;height:50%;width:1px;background:#cbd8e7}
+ .header nav>.nav-catalog-toggle:hover,.header nav>.nav-catalog-toggle:focus-visible,.header nav>a:not(.nav-mobile-catalog):hover,.header nav>a:not(.nav-mobile-catalog):focus-visible{z-index:1;color:#2454a4;background:#fff;box-shadow:0 5px 14px rgba(32,62,100,.16);transform:translateY(-2px)}
+}
+@media (min-width:1001px) and (max-width:1200px){.header nav>.nav-catalog-toggle,.header nav>a:not(.nav-mobile-catalog){padding-left:8px;padding-right:8px}}
+@media (prefers-reduced-motion:reduce){.header nav>.nav-catalog-toggle,.header nav>a:not(.nav-mobile-catalog){transition:none}}
