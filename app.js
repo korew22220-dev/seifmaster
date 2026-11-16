@@ -53,6 +53,18 @@ function showProductPhoto(group,index){
 document.addEventListener('click',event=>{const trigger=event.target.closest('[data-photo-group]');if(trigger)showProductPhoto(trigger.dataset.photoGroup,Number(trigger.dataset.photoIndex));});
 $('#previous-product-photo').addEventListener('click',()=>showProductPhoto(photoGroup,photoIndex-1));
 $('#next-product-photo').addEventListener('click',()=>showProductPhoto(photoGroup,photoIndex+1));
+let photoTouchStart=null;
+photoDialog.querySelector('figure').addEventListener('touchstart',event=>{
+ if(event.touches.length!==1){photoTouchStart=null;return;}
+ const touch=event.touches[0];photoTouchStart={x:touch.clientX,y:touch.clientY};
+},{passive:true});
+photoDialog.querySelector('figure').addEventListener('touchend',event=>{
+ if(!photoTouchStart||event.changedTouches.length!==1){photoTouchStart=null;return;}
+ const touch=event.changedTouches[0],dx=touch.clientX-photoTouchStart.x,dy=touch.clientY-photoTouchStart.y;
+ photoTouchStart=null;
+ if(Math.abs(dx)>=50&&Math.abs(dx)>Math.abs(dy)*1.3)showProductPhoto(photoGroup,photoIndex+(dx<0?1:-1));
+},{passive:true});
+photoDialog.querySelector('figure').addEventListener('touchcancel',()=>{photoTouchStart=null;},{passive:true});
 photoDialog.addEventListener('keydown',event=>{if(event.key==='ArrowLeft'){event.preventDefault();showProductPhoto(photoGroup,photoIndex-1);}if(event.key==='ArrowRight'){event.preventDefault();showProductPhoto(photoGroup,photoIndex+1);}});
 
 $('.copy-address').addEventListener('click',async()=>{
