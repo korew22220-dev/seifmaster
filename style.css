@@ -323,3 +323,8 @@ body.section-navigating main,body.section-navigating>footer{opacity:0}
 #process.section{padding-top:28px}
 #process .section-head h2{margin-top:0}
 @media(max-width:600px){#selection.section{padding-bottom:20px}#process.section{padding-top:20px}}
+
+/* Approved dealer statement badge. */
+.manufacturers-heading>.dealer-badge{display:flex;align-items:center;gap:16px;max-width:440px;margin:0;padding:18px 22px;background:#eaf1fb;border:1px solid #9fbce5;border-radius:18px;color:#202c3a;font-size:18px;font-weight:750;line-height:1.45}
+.dealer-badge svg{flex:0 0 36px;color:#2454a4}
+@media(max-width:600px){.manufacturers-heading>.dealer-badge{width:100%;max-width:none;padding:16px;gap:12px;font-size:16px;border-radius:16px}.dealer-badge svg{width:30px;height:30px;flex-basis:30px}}
