@@ -288,3 +288,7 @@ body.section-navigating main,body.section-navigating>footer{opacity:0}
 #solution-request{position:relative;overflow:hidden;isolation:isolate;font-weight:800}
 #solution-request::after{content:"";position:absolute;pointer-events:none;inset:-50% auto -50% -40%;width:30%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.24),transparent);transform:translateX(0) skewX(-18deg);animation:measure-shimmer 5.5s ease-in-out infinite}
 @media(prefers-reduced-motion:reduce){#solution-request::after{animation:none;display:none}}
+
+/* Slightly larger desktop menu labels. */
+@media(min-width:1001px){.header nav{font-size:17px}}
+@media(min-width:1001px) and (max-width:1200px){.header nav{font-size:15px}}
