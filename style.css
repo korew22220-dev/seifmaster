@@ -317,3 +317,9 @@ body.section-navigating main,body.section-navigating>footer{opacity:0}
 .contact-section .contact-channels .contact-channel svg{width:18px;height:18px;flex-shrink:0}
 @media(max-width:1000px){.contact-section .contact-grid{grid-template-columns:1fr;gap:28px;padding:28px}.contact-section .contact-info{padding:28px}.contact-section .contact-info .contact-phone{font-size:32px}}
 @media(max-width:600px){.contact-section{padding:30px 0}.contact-section .contact-grid{padding:22px 18px;border-radius:20px;gap:24px}.contact-section .contact-grid h2{font-size:30px;letter-spacing:-1px}.contact-section .contact-grid>div:first-child p{font-size:16px;margin:16px 0 22px}.contact-section .contact-info{padding:22px 16px;border-radius:16px}.contact-section .contact-info .contact-phone{font-size:clamp(21px,6vw,29px)}.contact-section .contact-info>a:not(.contact-phone){font-size:16px}.contact-section .contact-channels{gap:6px}.contact-section .contact-channels .contact-channel{font-size:12px;padding:10px 5px;gap:4px}.contact-section .contact-channels .contact-channel svg{width:15px;height:15px}}
+
+/* Avoid stacked section padding between selection and process. */
+#selection.section{padding-bottom:28px}
+#process.section{padding-top:28px}
+#process .section-head h2{margin-top:0}
+@media(max-width:600px){#selection.section{padding-bottom:20px}#process.section{padding-top:20px}}
