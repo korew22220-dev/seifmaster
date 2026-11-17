@@ -251,7 +251,9 @@ body.section-navigating main,body.section-navigating>footer{opacity:0}
 /* Secondary measurement action on the first screen. */
 .hero .hero-actions{display:flex;flex-wrap:wrap;align-items:stretch;gap:12px}
 .hero .hero-actions>.button{flex:1 1 220px;font-size:14px;padding:14px 18px;min-height:58px}
-.hero .hero-actions>.hero-measure{background:transparent;border:1px solid #2454a4;color:#2454a4;box-shadow:none}
-.hero .hero-actions>.hero-measure:hover{background:#e6edf8;color:#193f80;border-color:#193f80}
+.hero .hero-actions>a.button{background:#fff;border:1px solid #2454a4;color:#2454a4;box-shadow:none}
+.hero .hero-actions>a.button:hover{background:#e6edf8;color:#193f80;border-color:#193f80}
+.hero .hero-actions>.hero-measure{background:#2454a4;border:1px solid #2454a4;color:#fff}
+.hero .hero-actions>.hero-measure:hover{background:#193f80;color:#fff;border-color:#193f80}
 .hero .hero-actions>.hero-browse{flex-basis:100%;align-self:center}
-@media(max-width:600px){.hero .hero-actions>.button{flex:0 0 100%;font-size:15px;min-height:52px}.hero .hero-actions>.hero-measure{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.7);color:#fff}.hero .hero-actions>.hero-measure:hover{background:rgba(255,255,255,.2);border-color:#fff;color:#fff}}
+@media(max-width:600px){.hero .hero-actions>.button{flex:0 0 100%;font-size:15px;min-height:52px}}
