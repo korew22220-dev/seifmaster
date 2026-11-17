@@ -328,3 +328,9 @@ body.section-navigating main,body.section-navigating>footer{opacity:0}
 .manufacturers-heading>.dealer-badge{display:flex;align-items:center;gap:16px;max-width:440px;margin:0;padding:18px 22px;background:#eaf1fb;border:1px solid #9fbce5;border-radius:18px;color:#202c3a;font-size:18px;font-weight:750;line-height:1.45}
 .dealer-badge svg{flex:0 0 36px;color:#2454a4}
 @media(max-width:600px){.manufacturers-heading>.dealer-badge{width:100%;max-width:none;padding:16px;gap:12px;font-size:16px;border-radius:16px}.dealer-badge svg{width:30px;height:30px;flex-basis:30px}}
+
+/* Match right-hand section notes to the approved dealer badge. */
+.section-head>.section-note,.solutions .section-head>.section-note{display:flex;align-items:center;gap:16px;flex:0 1 440px;max-width:440px;margin:0;padding:18px 22px;background:#eaf1fb;border:1px solid #9fbce5;border-radius:18px;color:#202c3a;font-size:18px;font-weight:750;line-height:1.45}
+.section-note svg{flex:0 0 36px;color:#2454a4}
+.section-note>span{min-width:0}
+@media(max-width:700px){.section-head>.section-note,.solutions .section-head>.section-note{flex-basis:auto;width:100%;max-width:none;margin-top:20px;padding:16px;gap:12px;font-size:16px;border-radius:16px}.section-note svg{width:30px;height:30px;flex-basis:30px}}
