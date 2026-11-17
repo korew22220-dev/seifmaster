@@ -263,3 +263,5 @@ body.section-navigating main,body.section-navigating>footer{opacity:0}
 .hero .hero-actions>.hero-measure::after{content:"";position:absolute;pointer-events:none;inset:-50% auto -50% -40%;width:30%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.24),transparent);transform:translateX(0) skewX(-18deg);animation:measure-shimmer 5.5s ease-in-out infinite}
 @keyframes measure-shimmer{0%,12%{transform:translateX(0) skewX(-18deg);opacity:0}15%{opacity:1}40%{transform:translateX(520%) skewX(-18deg);opacity:1}41%,100%{transform:translateX(520%) skewX(-18deg);opacity:0}}
 @media(prefers-reduced-motion:reduce){.hero .hero-actions>.hero-measure::after{animation:none;display:none}}
+
+.hero .hero-actions>.hero-measure{font-weight:750}
