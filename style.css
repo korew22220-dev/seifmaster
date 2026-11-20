@@ -365,3 +365,6 @@ body.section-navigating main,body.section-navigating>footer{opacity:0}
   0% { background-position: -65px 0, 0 0; }
   32%, 100% { background-position: calc(100% + 65px) 0, 0 0; }
 }
+
+.product-sales-ribbon-wide{width:auto;min-width:134px;padding-inline:12px 24px}
+@media(max-width:420px){.product-sales-ribbon-wide{top:15px;font-size:11px;min-width:0;padding-inline:10px 20px}}
