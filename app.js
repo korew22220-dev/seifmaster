@@ -16,7 +16,7 @@ const productSalesBadges={"Шкафы для раздевалок":{"label":"Л�
 $('#product-guides').innerHTML=productGroups.map((g,i)=>`<section class="product-guide" id="guide-${g.id}" aria-labelledby="guide-title-${g.id}"><div class="guide-header"><span class="guide-number">0${i+1}</span><div><h3 id="guide-title-${g.id}">${g.title}</h3><small>${g.items.length} ${g.items.length%10===1&&g.items.length%100!==11?'категория':g.items.length%10>=2&&g.items.length%10<=4&&(g.items.length%100<12||g.items.length%100>14)?'категории':'категорий'}</small></div></div><div class="guide-body"><p class="guide-intro">${g.intro}</p>${renderProductGallery(g.id)}<div class="product-types">${g.items.map(([title,description],typeIndex)=>{const badge=productSalesBadges[title];return `<article${badge?' class="has-sales-ribbon"':''}${badge?.id?` id="${badge.id}"`:''}>${badge?`<span class="product-sales-ribbon${badge.label.length>12?' product-sales-ribbon-wide':''}">${badge.label}</span>`:''}${(g.id==='safes'||g.id==='metal'||g.id==='tools'||g.id==='racks')?`<button type="button" class="safe-type-photo" data-photo-group="${g.id}" data-photo-index="${typeIndex}" aria-label="Увеличить фото: ${title}"><img src="assets/${productPhotos[g.id][typeIndex].src}" alt="${productPhotos[g.id][typeIndex].alt}" width="1024" height="768" loading="lazy" decoding="async"></button>`:''}<h4>${title}</h4><p>${description}</p><button class="button product-request" data-request="${title}" aria-label="Подобрать: ${title}">Подобрать <span aria-hidden="true">↗</span></button></article>`;}).join('')}</div>${g.note?`<p class="guide-note">${g.note}</p>`:''}</div></section>`).join('');
 $('#category-grid').innerHTML=categories.map((c,i)=>`<article class="category ${c.icon?'abstract':''} ${productPhotos[c.id]?'has-product-photo':''}" data-card="${c.id}"><span class="cat-number">0${i+1} /</span>${c.image?`<img class="cat-image" src="assets/${c.image}" alt="${c.title}" loading="lazy" width="200" height="152">`:`<div class="cat-icon">${lineIcon(c.icon)}</div>`}<h3>${c.title}</h3><p>${c.desc}</p><a class="button category-action" href="#guide-${c.id}">Смотреть варианты <span aria-hidden="true">↓</span></a></article>`).join('');
 const detail=$('#detail-dialog'),request=$('#request-dialog');
-function openRequest(subject,details=''){if(detail.open)detail.close();const measurement=subject==='Бесплатный замер помещения';$('#request-title').textContent=measurement?'Записаться на бесплатный замер.':'Расскажите о задаче.';$('#request-subject').parentElement.firstChild.textContent=measurement?'Тема обращения':'Что нужно подобрать';$('#request-form [name=message]').placeholder=measurement?'Адрес объекта, что нужно оборудовать, удобное время':'Количество, размеры, город доставки, пожелания';$('#request-form').hidden=false;$('#email-ready').hidden=true;$('#request-subject').value=subject;$('#request-form [name=message]').value=details;if(!request.open)request.showModal();}
+function openRequest(subject,details=''){if(detail.open)detail.close();const measurement=subject==='Бесплатный замер помещения';$('#request-title').textContent=measurement?'Записаться на бесплатный замер.':'Расскажите о задаче.';$('#request-subject').parentElement.firstChild.textContent=measurement?'Тема обращения':'Что нужно подобрать';$('#request-form [name=message]').placeholder=measurement?'Адрес объекта, что нужно оборудовать, удобное время':'Количество, размеры, город доставки, пожелания';$('#request-consent').checked=false;$('#request-form').hidden=false;$('#email-ready').hidden=true;$('#request-subject').value=subject;$('#request-form [name=message]').value=details;if(!request.open)request.showModal();}
 $$('[data-category]').forEach(b=>b.addEventListener('click',()=>{const c=categories.find(x=>x.id===b.dataset.category);$('#detail-content').innerHTML=`<div class="eyebrow">НАПРАВЛЕНИЕ / СЕЙФМАСТЕР</div><h2 id="detail-title">${c.title}</h2>${productPhotos[c.id]?renderProductGallery(c.id):c.image?`<img src="assets/${c.image}" class="detail-image" alt="Оборудование: ${c.title}">`:''}<p>${c.info}</p><ul class="detail-list">${(c.products||c.items.map(x=>[x,''])).map(([title,description])=>`<li><strong>${title}</strong>${description?`<p>${description}</p>`:''}</li>`).join('')}</ul><p>${c.note||'Комплектацию, стоимость и сроки уточним при подборе.'}</p><div class="detail-actions"><button class="button" id="detail-request">Запросить подбор ↗</button><a class="textlink" href="https://profsklad.ru" target="_blank" rel="noopener">Полный каталог ↗</a></div>`;$('#detail-request').onclick=()=>openRequest(c.title);detail.showModal();}));
 $$('[data-request]').forEach(b=>b.addEventListener('click',()=>openRequest(b.dataset.request)));
 $$('dialog').forEach(d=>{d.querySelector('.dialog-close').onclick=()=>d.close();d.addEventListener('click',e=>{if(e.target===d){const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close();}});});
@@ -27,7 +27,40 @@ let step=0;const answers={object:'',category:'',details:''};
 const escapeHTML=s=>s.replace(/[&<>"']/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]));
 function renderQuiz(){const q=$('#quiz-content');$('#step-label').textContent=`ШАГ ${step+1} ИЗ 3`;$('#progress-fill').style.width=((step+1)/3*100)+'%';$('.back').hidden=step===0;$('#quiz-next').innerHTML=step===2?'Подготовить заявку <span>↗</span>':'Далее <span>→</span>';if(step<2){const opts=step===0?['Одно изделие / для дома','Склад','Производство / автосервис','Офис / архив']:categories.map(c=>c.title).concat('Нужна комплектация');const key=step===0?'object':'category';q.innerHTML=`<h3>${step===0?'Для чего подбираем оборудование?':'Что нужно подобрать?'}</h3><div class="options">${opts.map(x=>`<label class="option"><input type="radio" name="choice" value="${x}" ${answers[key]===x?'checked':''} required><span>${x}</span></label>`).join('')}</div>`;$('#quiz-next').disabled=!answers[key];q.querySelectorAll('input').forEach(i=>i.onchange=()=>{answers[key]=i.value;$('#quiz-next').disabled=false;});}else{q.innerHTML=`<h3>Что важно учесть?</h3><p style="font-size:12px;color:#71736e">Объект: ${escapeHTML(answers.object)} · ${escapeHTML(answers.category)}</p><label for="quiz-details">Размеры, количество, нагрузка или город доставки</label><textarea id="quiz-details" maxlength="2000" rows="4" placeholder="Например: 20 шкафов для раздевалки, Набережные Челны">${escapeHTML(answers.details)}</textarea><p style="font-size:10px;color:#71736e">Можно пропустить, если пока нет точных данных.</p>`;$('#quiz-next').disabled=false;}}
 $('#quiz-form').onsubmit=e=>{e.preventDefault();if(step<2){step++;renderQuiz();$('#quiz-content h3').tabIndex=-1;$('#quiz-content h3').focus();}else{answers.details=$('#quiz-details').value;openRequest(answers.category,`Объект: ${answers.object}\n${answers.details}`);}};$('.back').onclick=()=>{if(step===2)answers.details=$('#quiz-details').value;step--;renderQuiz();$('#quiz-content h3').tabIndex=-1;$('#quiz-content h3').focus();};renderQuiz();
-$('#request-form').onsubmit=e=>{e.preventDefault();const f=new FormData(e.target);const subject='Заявка: '+f.get('subject');const body=`Здравствуйте! ${f.get('subject')==='Бесплатный замер помещения'?'Хочу записаться на бесплатный замер.':'Нужен подбор оборудования.'}\n\nНаправление: ${f.get('subject')}\nИмя: ${f.get('name')}\nОбратная связь: ${f.get('contact')}\n\n${f.get('message')||''}`;$('#email-text').value=body;$('#request-form').hidden=true;$('#email-ready').hidden=false;$('#copy-status').textContent='';$('#send-whatsapp').href='https://wa.me/79503260972?text='+encodeURIComponent(body);$('#send-telegram').href='https://t.me/+79503260972?text='+encodeURIComponent(body);$('#send-email').href=`mailto:safemastersale@mail.ru?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;$('#email-ready h3').tabIndex=-1;$('#email-ready h3').focus();};
+$('#request-form').onsubmit = event => {
+  event.preventDefault();
+  const fields = new FormData(event.currentTarget);
+  const consentVersion = fields.get('consent');
+  if (!consentVersion) return;
+
+  const topic = fields.get('subject');
+  const subject = 'Заявка: ' + topic;
+  const greeting = topic === 'Бесплатный замер помещения'
+    ? 'Хочу записаться на бесплатный замер.'
+    : 'Нужен подбор оборудования.';
+  const body = [
+    `Здравствуйте! ${greeting}`,
+    '',
+    `Направление: ${topic}`,
+    `Имя: ${fields.get('name')}`,
+    `Обратная связь: ${fields.get('contact')}`,
+    '',
+    fields.get('message') || '',
+    '',
+    `Даю согласие на обработку персональных данных для ответа на обращение (редакция ${consentVersion}).`,
+    `Дата и время подтверждения (UTC): ${new Date().toISOString()}`
+  ].join('\n');
+
+  $('#email-text').value = body;
+  $('#request-form').hidden = true;
+  $('#email-ready').hidden = false;
+  $('#copy-status').textContent = '';
+  $('#send-whatsapp').href = 'https://wa.me/79503260972?text=' + encodeURIComponent(body);
+  $('#send-telegram').href = 'https://t.me/+79503260972?text=' + encodeURIComponent(body);
+  $('#send-email').href = `mailto:safemastersale@mail.ru?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  $('#email-ready h3').tabIndex = -1;
+  $('#email-ready h3').focus();
+};
 $('#copy-email').onclick=async()=>{try{await navigator.clipboard.writeText($('#email-text').value);$('#copy-status').textContent='Текст скопирован. Вставьте его в сообщение в MAX, WhatsApp, Telegram или письмо.';}catch{$('#email-text').select();$('#copy-status').textContent='Выделили текст. Скопируйте его и вставьте в сообщение или письмо.';}};
 $('.menu').onclick=()=>{const open=$('header nav').classList.toggle('open');$('.menu').setAttribute('aria-expanded',open);$('.menu').setAttribute('aria-label',open?'Закрыть меню':'Открыть меню');};$$('header nav a').forEach(a=>a.onclick=()=>{$('header nav').classList.remove('open');$('.menu').setAttribute('aria-expanded','false');});
 const catalogToggle=$('.nav-catalog-toggle'),catalogLinks=$('#nav-product-links');

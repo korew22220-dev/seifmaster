@@ -389,3 +389,37 @@ body.section-navigating main,body.section-navigating>footer{opacity:0}
     max-height:275px;
   }
 }
+
+.footer-legal-links {
+  display: grid;
+  gap: 6px;
+}
+
+#request-form .request-consent {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 10px;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+#request-form .request-consent input {
+  width: 18px;
+  height: 18px;
+  margin: 4px 0 0;
+  padding: 0;
+  accent-color: #2454a4;
+}
+
+#request-form .request-consent label {
+  margin: 0;
+  font-size: inherit;
+  cursor: pointer;
+}
+
+#request-form .request-consent a {
+  color: #2454a4;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
