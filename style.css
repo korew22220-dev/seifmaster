@@ -377,8 +377,8 @@ body.section-navigating main,body.section-navigating>footer{opacity:0}
   }
 }
 
-/* Give the tall safe more image space without cropping it. */
-#guide-safes .safe-type-photo:has(> img[src="assets/products/safes-gun.webp"]) {
+/* Keep both tall safe photos in the row the same height. */
+#guide-safes .safe-type-photo:has(> img:is([src="assets/products/safes-gun.webp"], [src="assets/products/safes-elite.webp"])) {
   height:254px;
 }
 @media (max-width:600px) {
