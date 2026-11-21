@@ -369,3 +369,10 @@ body.section-navigating main,body.section-navigating>footer{opacity:0}
 
 .product-sales-ribbon-wide{width:auto;min-width:134px;padding-inline:12px 24px}
 @media(max-width:420px){.product-sales-ribbon-wide{min-width:0;padding-inline:10px 20px}}
+
+/* Match the two photo rows where the fireproof safe has a ribbon. */
+@media (min-width:601px) {
+  #guide-safes .product-types > .has-sales-ribbon:first-child + article:not(.has-sales-ribbon) {
+    padding-top:52px;
+  }
+}
