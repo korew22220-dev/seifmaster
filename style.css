@@ -376,3 +376,15 @@ body.section-navigating main,body.section-navigating>footer{opacity:0}
     padding-top:52px;
   }
 }
+
+/* Give the tall safe more image space without cropping it. */
+#guide-safes .safe-type-photo:has(> img[src="assets/products/safes-gun.webp"]) {
+  height:254px;
+}
+@media (max-width:600px) {
+  #guide-safes .safe-type-photo:has(> img[src="assets/products/safes-gun.webp"]) {
+    height:auto;
+    aspect-ratio:6 / 5;
+    max-height:275px;
+  }
+}
