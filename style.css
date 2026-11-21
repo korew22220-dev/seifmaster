@@ -382,7 +382,7 @@ body.section-navigating main,body.section-navigating>footer{opacity:0}
   height:254px;
 }
 @media (max-width:600px) {
-  #guide-safes .safe-type-photo:has(> img[src="assets/products/safes-gun.webp"]) {
+  #guide-safes .safe-type-photo:has(> img:is([src="assets/products/safes-gun.webp"], [src="assets/products/safes-elite.webp"])) {
     height:auto;
     aspect-ratio:6 / 5;
     max-height:275px;
