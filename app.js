@@ -16,20 +16,83 @@ const productSalesBadges={"Шкафы для раздевалок":{"label":"Л�
 $('#product-guides').innerHTML=productGroups.map((g,i)=>`<section class="product-guide" id="guide-${g.id}" aria-labelledby="guide-title-${g.id}"><div class="guide-header"><span class="guide-number">0${i+1}</span><div><h3 id="guide-title-${g.id}">${g.title}</h3><small>${g.items.length} ${g.items.length%10===1&&g.items.length%100!==11?'категория':g.items.length%10>=2&&g.items.length%10<=4&&(g.items.length%100<12||g.items.length%100>14)?'категории':'категорий'}</small></div></div><div class="guide-body"><p class="guide-intro">${g.intro}</p>${renderProductGallery(g.id)}<div class="product-types">${g.items.map(([title,description],typeIndex)=>{const badge=productSalesBadges[title];return `<article${badge?' class="has-sales-ribbon"':''}${badge?.id?` id="${badge.id}"`:''}>${badge?`<span class="product-sales-ribbon${badge.label.length>12?' product-sales-ribbon-wide':''}">${badge.label}</span>`:''}${(g.id==='safes'||g.id==='metal'||g.id==='tools'||g.id==='racks')?`<button type="button" class="safe-type-photo" data-photo-group="${g.id}" data-photo-index="${typeIndex}" aria-label="Увеличить фото: ${title}"><img src="assets/${productPhotos[g.id][typeIndex].src}" alt="${productPhotos[g.id][typeIndex].alt}" width="1024" height="768" loading="lazy" decoding="async"></button>`:''}<h4>${title}</h4><p>${description}</p><button class="button product-request" data-request="${title}" aria-label="Подобрать: ${title}">Подобрать <span aria-hidden="true">↗</span></button></article>`;}).join('')}</div>${g.note?`<p class="guide-note">${g.note}</p>`:''}</div></section>`).join('');
 $('#category-grid').innerHTML=categories.map((c,i)=>`<article class="category ${c.icon?'abstract':''} ${productPhotos[c.id]?'has-product-photo':''}" data-card="${c.id}"><span class="cat-number">0${i+1} /</span>${c.image?`<img class="cat-image" src="assets/${c.image}" alt="${c.title}" loading="lazy" width="200" height="152">`:`<div class="cat-icon">${lineIcon(c.icon)}</div>`}<h3>${c.title}</h3><p>${c.desc}</p><a class="button category-action" href="#guide-${c.id}">Смотреть варианты <span aria-hidden="true">↓</span></a></article>`).join('');
 const detail=$('#detail-dialog'),request=$('#request-dialog');
-function openRequest(subject,details=''){if(detail.open)detail.close();const measurement=subject==='Бесплатный замер помещения';$('#request-title').textContent=measurement?'Записаться на бесплатный замер.':'Расскажите о задаче.';$('#request-subject').parentElement.firstChild.textContent=measurement?'Тема обращения':'Что нужно подобрать';$('#request-form [name=message]').placeholder=measurement?'Адрес объекта, что нужно оборудовать, удобное время':'Количество, размеры, город доставки, пожелания';$('#request-consent').checked=false;$('#request-form').hidden=false;$('#email-ready').hidden=true;$('#request-subject').value=subject;$('#request-form [name=message]').value=details;if(!request.open)request.showModal();}
+const requestForm = $('#request-form');
+const requestSubject = $('#request-subject');
+const requestContact = $('#request-contact');
+const requestContactError = $('#request-contact-error');
+const requestReady = $('#email-ready');
+const emailAddress = document.createElement('input');
+emailAddress.type = 'email';
+let requestContext;
+
+function openRequest(subject, details = '') {
+  if (detail.open) detail.close();
+  const measurement = subject === 'Бесплатный замер помещения';
+  const message = requestForm.elements.message;
+  $('#request-title').textContent = measurement ? 'Записаться на бесплатный замер.' : 'Расскажите о задаче.';
+  requestSubject.parentElement.firstChild.textContent = measurement ? 'Тема обращения' : 'Что нужно подобрать';
+  message.placeholder = measurement ? 'Адрес объекта, что нужно оборудовать, удобное время' : 'Количество, размеры, город доставки, пожелания';
+  if (requestContext?.subject !== subject || requestContext.details !== details) {
+    requestSubject.value = subject;
+    message.value = details;
+    requestContext = { subject, details };
+  }
+  $('#request-consent').checked = false;
+  showRequestContactError(false);
+  requestForm.hidden = false;
+  requestReady.hidden = true;
+  if (!request.open) request.showModal();
+}
 $$('[data-category]').forEach(b=>b.addEventListener('click',()=>{const c=categories.find(x=>x.id===b.dataset.category);$('#detail-content').innerHTML=`<div class="eyebrow">НАПРАВЛЕНИЕ / СЕЙФМАСТЕР</div><h2 id="detail-title">${c.title}</h2>${productPhotos[c.id]?renderProductGallery(c.id):c.image?`<img src="assets/${c.image}" class="detail-image" alt="Оборудование: ${c.title}">`:''}<p>${c.info}</p><ul class="detail-list">${(c.products||c.items.map(x=>[x,''])).map(([title,description])=>`<li><strong>${title}</strong>${description?`<p>${description}</p>`:''}</li>`).join('')}</ul><p>${c.note||'Комплектацию, стоимость и сроки уточним при подборе.'}</p><div class="detail-actions"><button class="button" id="detail-request">Запросить подбор ↗</button><a class="textlink" href="https://profsklad.ru" target="_blank" rel="noopener">Полный каталог ↗</a></div>`;$('#detail-request').onclick=()=>openRequest(c.title);detail.showModal();}));
 $$('[data-request]').forEach(b=>b.addEventListener('click',()=>openRequest(b.dataset.request)));
 $$('dialog').forEach(d=>{d.querySelector('.dialog-close').onclick=()=>d.close();d.addEventListener('click',e=>{if(e.target===d){const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close();}});});
 const solutions={warehouse:{title:'Больше полезного места.<br>Удобнее каждый рабочий день.',text:'Организуйте хранение и перемещение товаров. Подберём стеллажи по нагрузке, складскую технику и оснащение бытовых зон.',tags:['Хранение товаров','Перемещение грузов','Раздевалки'],items:['Стеллажные системы','Тележки и штабелёры','Шкафы для персонала','Инструментальные шкафы']},production:{title:'Всё под рукой.<br>Всё на своём месте.',text:'Создайте удобное рабочее пространство в цехе, мастерской или автосервисе. Согласуем рабочие поверхности и хранение инструмента.',tags:['Рабочие места','Хранение инструмента','Бытовые зоны'],items:['Верстаки и рабочие столы','Инструментальные шкафы','Тумбы и тележки','Гардеробные шкафы']},office:{title:'Документы в порядке.<br>Важное — под защитой.',text:'Подберём решения для хранения документов, организации архива и защиты ценностей в офисе.',tags:['Документооборот','Архив','Безопасность'],items:['Архивные шкафы','Картотеки','Мобильные архивы','Офисные сейфы']}};
-function setSolution(key){const s=solutions[key];$('#solutions').dataset.background=key;$$('[data-solution]').forEach(b=>{const active=b.dataset.solution===key;b.setAttribute('aria-selected',active);b.tabIndex=active?0:-1;});$('#solution-panel').setAttribute('aria-labelledby','tab-'+key);$('#solution-panel').innerHTML=`<div><h3>${s.title}</h3><p>${s.text}</p><div class="solution-tags">${s.tags.map(x=>`<span>${x}</span>`).join('')}</div><button class="textlink" id="solution-request">Записаться на бесплатный замер <span>↗</span></button></div><div class="solution-list">${s.items.map((x,i)=>`<div class="solution-item"><span>0${i+1} /</span><b>${x}</b></div>`).join('')}</div>`;$('#solution-request').onclick=()=>openRequest('Бесплатный замер помещения','Объект: '+$('#tab-'+key).textContent);}
+function setSolution(key){const s=solutions[key];$('.solutions-bg-'+key).classList.add('has-background');$('#solutions').dataset.background=key;$$('[data-solution]').forEach(b=>{const active=b.dataset.solution===key;b.setAttribute('aria-selected',active);b.tabIndex=active?0:-1;});$('#solution-panel').setAttribute('aria-labelledby','tab-'+key);$('#solution-panel').innerHTML=`<div><h3>${s.title}</h3><p>${s.text}</p><div class="solution-tags">${s.tags.map(x=>`<span>${x}</span>`).join('')}</div><button class="textlink" id="solution-request">Записаться на бесплатный замер <span>↗</span></button></div><div class="solution-list">${s.items.map((x,i)=>`<div class="solution-item"><span>0${i+1} /</span><b>${x}</b></div>`).join('')}</div>`;$('#solution-request').onclick=()=>openRequest('Бесплатный замер помещения','Объект: '+$('#tab-'+key).textContent);}
 $$('[data-solution]').forEach((b,i)=>{b.onclick=()=>setSolution(b.dataset.solution);b.onkeydown=e=>{const tabs=$$('[data-solution]');let n;if(e.key==='ArrowRight')n=(i+1)%tabs.length;else if(e.key==='ArrowLeft')n=(i+tabs.length-1)%tabs.length;else if(e.key==='Home')n=0;else if(e.key==='End')n=tabs.length-1;if(n!==undefined){e.preventDefault();setSolution(tabs[n].dataset.solution);tabs[n].focus();}};});setSolution('warehouse');
 let step=0;const answers={object:'',category:'',details:''};
 const escapeHTML=s=>s.replace(/[&<>"']/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]));
 function renderQuiz(){const q=$('#quiz-content');$('#step-label').textContent=`ШАГ ${step+1} ИЗ 3`;$('#progress-fill').style.width=((step+1)/3*100)+'%';$('.back').hidden=step===0;$('#quiz-next').innerHTML=step===2?'Подготовить заявку <span>↗</span>':'Далее <span>→</span>';if(step<2){const opts=step===0?['Одно изделие / для дома','Склад','Производство / автосервис','Офис / архив']:categories.map(c=>c.title).concat('Нужна комплектация');const key=step===0?'object':'category';q.innerHTML=`<h3>${step===0?'Для чего подбираем оборудование?':'Что нужно подобрать?'}</h3><div class="options">${opts.map(x=>`<label class="option"><input type="radio" name="choice" value="${x}" ${answers[key]===x?'checked':''} required><span>${x}</span></label>`).join('')}</div>`;$('#quiz-next').disabled=!answers[key];q.querySelectorAll('input').forEach(i=>i.onchange=()=>{answers[key]=i.value;$('#quiz-next').disabled=false;});}else{q.innerHTML=`<h3>Что важно учесть?</h3><p style="font-size:12px;color:#71736e">Объект: ${escapeHTML(answers.object)} · ${escapeHTML(answers.category)}</p><label for="quiz-details">Размеры, количество, нагрузка или город доставки</label><textarea id="quiz-details" maxlength="2000" rows="4" placeholder="Например: 20 шкафов для раздевалки, Набережные Челны">${escapeHTML(answers.details)}</textarea><p style="font-size:10px;color:#71736e">Можно пропустить, если пока нет точных данных.</p>`;$('#quiz-next').disabled=false;}}
 $('#quiz-form').onsubmit=e=>{e.preventDefault();if(step<2){step++;renderQuiz();$('#quiz-content h3').tabIndex=-1;$('#quiz-content h3').focus();}else{answers.details=$('#quiz-details').value;openRequest(answers.category,`Объект: ${answers.object}\n${answers.details}`);}};$('.back').onclick=()=>{if(step===2)answers.details=$('#quiz-details').value;step--;renderQuiz();$('#quiz-content h3').tabIndex=-1;$('#quiz-content h3').focus();};renderQuiz();
-$('#request-form').onsubmit = event => {
+function showRequestContactError(show) {
+  requestContactError.hidden = !show;
+  if (show) {
+    requestContact.setAttribute('aria-invalid', 'true');
+    requestContact.setAttribute('aria-describedby', requestContactError.id);
+  } else {
+    requestContact.removeAttribute('aria-invalid');
+    requestContact.removeAttribute('aria-describedby');
+  }
+}
+
+function validateRequestContact() {
+  const contact = requestContact.value.trim();
+  emailAddress.value = contact;
+  const validEmail = emailAddress.checkValidity() && /@[^@]+\.[^@]+$/.test(contact);
+  const digits = contact.replace(/\D/g, '');
+  const validPhone = /^\+?[\d().\s-]+$/.test(contact) && digits.length === 11;
+  const valid = validEmail || validPhone;
+
+  showRequestContactError(!valid);
+  return valid;
+}
+
+requestContact.addEventListener('input', () => {
+  if (requestContact.hasAttribute('aria-invalid')) validateRequestContact();
+});
+
+$('#edit-request').onclick = () => {
+  requestReady.hidden = true;
+  requestForm.hidden = false;
+  requestSubject.focus();
+};
+
+requestForm.onsubmit = event => {
   event.preventDefault();
-  const fields = new FormData(event.currentTarget);
+  if (!validateRequestContact()) {
+    requestContact.focus();
+    return;
+  }
+  const fields = new FormData(requestForm);
   const consentVersion = fields.get('consent');
   if (!consentVersion) return;
 
@@ -43,7 +106,7 @@ $('#request-form').onsubmit = event => {
     '',
     `Направление: ${topic}`,
     `Имя: ${fields.get('name')}`,
-    `Обратная связь: ${fields.get('contact')}`,
+    `Обратная связь: ${requestContact.value.trim()}`,
     '',
     fields.get('message') || '',
     '',
@@ -52,8 +115,8 @@ $('#request-form').onsubmit = event => {
   ].join('\n');
 
   $('#email-text').value = body;
-  $('#request-form').hidden = true;
-  $('#email-ready').hidden = false;
+  requestForm.hidden = true;
+  requestReady.hidden = false;
   $('#copy-status').textContent = '';
   $('#send-whatsapp').href = 'https://wa.me/79503260972?text=' + encodeURIComponent(body);
   $('#send-telegram').href = 'https://t.me/+79503260972?text=' + encodeURIComponent(body);
@@ -62,7 +125,15 @@ $('#request-form').onsubmit = event => {
   $('#email-ready h3').focus();
 };
 $('#copy-email').onclick=async()=>{try{await navigator.clipboard.writeText($('#email-text').value);$('#copy-status').textContent='Текст скопирован. Вставьте его в сообщение в MAX, WhatsApp, Telegram или письмо.';}catch{$('#email-text').select();$('#copy-status').textContent='Выделили текст. Скопируйте его и вставьте в сообщение или письмо.';}};
-$('.menu').onclick=()=>{const open=$('header nav').classList.toggle('open');$('.menu').setAttribute('aria-expanded',open);$('.menu').setAttribute('aria-label',open?'Закрыть меню':'Открыть меню');};$$('header nav a').forEach(a=>a.onclick=()=>{$('header nav').classList.remove('open');$('.menu').setAttribute('aria-expanded','false');});
+const mobileMenu = $('.menu');
+const headerNavigation = $('header nav');
+function setMobileMenu(open) {
+  headerNavigation.classList.toggle('open', open);
+  mobileMenu.setAttribute('aria-expanded', String(open));
+  mobileMenu.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+}
+mobileMenu.onclick = () => setMobileMenu(!headerNavigation.classList.contains('open'));
+$$('header nav a').forEach(link => link.addEventListener('click', () => setMobileMenu(false)));
 const catalogToggle=$('.nav-catalog-toggle'),catalogLinks=$('#nav-product-links');
 function closeCatalogMenu(){catalogToggle.setAttribute('aria-expanded','false');catalogLinks.classList.remove('desktop-open');}
 catalogToggle.addEventListener('click',()=>{const open=catalogToggle.getAttribute('aria-expanded')!=='true';catalogToggle.setAttribute('aria-expanded',String(open));catalogLinks.classList.toggle('desktop-open',open);});
@@ -71,6 +142,13 @@ document.addEventListener('click',event=>{if(!event.target.closest('.nav-catalog
 document.addEventListener('keydown',event=>{if(event.key==='Escape'&&catalogToggle.getAttribute('aria-expanded')==='true'){closeCatalogMenu();catalogToggle.focus();}});
 window.addEventListener('resize',()=>{if(window.innerWidth<=1000)closeCatalogMenu();});
 $('#contact-toggle').onclick=()=>{const open=$('#contact-menu').hidden;$('#contact-menu').hidden=!open;$('#contact-toggle').setAttribute('aria-expanded',open);};document.addEventListener('click',e=>{if(!e.target.closest('.floating-contact')){$('#contact-menu').hidden=true;$('#contact-toggle').setAttribute('aria-expanded','false');}});document.addEventListener('keydown',e=>{if(e.key==='Escape'){$('#contact-menu').hidden=true;$('#contact-toggle').setAttribute('aria-expanded','false');}});
+const floatingContact = $('.floating-contact');
+const hero = $('.hero');
+const heroObserver = new IntersectionObserver(([entry]) => {
+  floatingContact.classList.toggle('is-over-hero', entry.isIntersecting);
+});
+heroObserver.observe(hero);
+
 const focus=new URLSearchParams(location.search).get('focus');const focused=categories.find(c=>c.id===focus);if(focused){const map={racks:'warehouse',metal:'office',tools:'production',safes:'office'};setSolution(map[focus]);answers.category=focused.title;document.querySelector('#guide-'+focus)?.scrollIntoView();}
 
 const brandMotionToggle=$('.brand-motion-toggle');
