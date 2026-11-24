@@ -371,17 +371,17 @@ body.section-navigating main,body.section-navigating>footer{opacity:0}
 
 /* Anniversary signature in the sticky header */
 .header-brand{display:flex;align-items:center;gap:clamp(8px,1.45vw,22px);flex:none}
-.header-anniversary{display:inline-flex;align-items:center;gap:.3em;padding:.33em .65em;color:#104c81;font-size:clamp(.8125rem,1.05vw,1rem);font-weight:550;line-height:1;white-space:nowrap;background:linear-gradient(90deg,transparent,rgba(78,153,227,.16) 24%,rgba(78,153,227,.13) 69%,transparent)}
-.header-anniversary-number{font-family:"Arial Narrow","Liberation Sans Narrow",Arial,sans-serif;font-size:2.35em;font-weight:500;letter-spacing:-.06em;line-height:.88}
+.header-anniversary{display:inline-flex;align-items:center;gap:.3em;padding:.33em .65em;color:#104c81;font-size:clamp(.875rem,1.12vw,1.0625rem);font-weight:600;line-height:1;white-space:nowrap;background:linear-gradient(90deg,transparent,rgba(78,153,227,.16) 24%,rgba(78,153,227,.13) 69%,transparent)}
+.header-anniversary-number{font-family:"Arial Narrow","Liberation Sans Narrow",Arial,sans-serif;font-size:2.35em;font-weight:600;letter-spacing:-.06em;line-height:.88}
 .header-anniversary-copy{line-height:1}
 @media(max-width:600px){
  .header-brand{gap:4px}
- .header-anniversary{font-size:.75rem;padding:.3em .45em}
+ .header-anniversary{font-size:.8125rem;padding:.3em .45em}
 }
 @media(max-width:380px){
  .header.wrap{width:calc(100% - 24px);gap:5px}
  .brand .company-logo{width:52px}
- .header-anniversary{font-size:.6875rem;padding-inline:.3em}
+ .header-anniversary{font-size:.75rem;padding-inline:.3em}
  .header-anniversary-number{font-size:2.1em}
  .header-contact .header-phone-icon{display:none}
  .header-contact .header-hours{padding-left:0}
